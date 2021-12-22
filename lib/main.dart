@@ -1,12 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:web_navigation/data.dart';
 
 void main() {
   setPathUrlStrategy();
   runApp(const MyApp());
 }
+
+List<Movie> movies = movieFromJson(data);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -103,8 +104,8 @@ class HomeBanner extends StatelessWidget {
         Container(
           decoration: backgroundGradient,
         ),
-        const BackDropImage(
-          image: "VlHt27nCqOuTnuX6bku8QZapzO.jpg",
+        BackDropImage(
+          image: movies[0].backdropPath!,
         ),
         const TitleSubtitle(),
       ],
@@ -162,7 +163,10 @@ class TitleSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Padding(
-      padding: const EdgeInsets.all(64.0),
+      padding: const EdgeInsets.only(
+        bottom: 64.0,
+        left: 64.0,
+      ),
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Column(
@@ -192,16 +196,41 @@ class TitleSubtitle extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 14.0,
+              height: 16.0,
             ),
             ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.add),
               label: const Text("RENT NOW"),
             ),
-            // SizedBox(
-            //   height: 300.0,
-            // ),
+            const SizedBox(
+              height: 24.0,
+            ),
+            Flexible(
+              child: SizedBox(
+                height: 200.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 6,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Material(
+                      elevation: 5.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: (index == 0)
+                              ? Border.all(color: Colors.black, width: 5.0)
+                              : null,
+                        ),
+                        child: Image.network(
+                          "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
