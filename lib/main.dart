@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:web_navigation/data.dart';
@@ -134,8 +136,12 @@ class BackDropImage extends StatelessWidget {
   }
 
   SizedBox _buildImage(BuildContext context) {
+    log(MediaQuery.of(context).size.width.toString());
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery.of(context).size.width *
+          (MediaQuery.of(context).size.width < 1450
+              ? 1
+              : (MediaQuery.of(context).size.width < 1650 ? 0.9 : 0.8)),
       height: MediaQuery.of(context).size.height,
       child: Image.network(
         "https://image.tmdb.org/t/p/w1280/$image",
@@ -163,9 +169,9 @@ class TitleSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 64.0,
-        left: 64.0,
+      padding: EdgeInsets.only(
+        bottom: 5 * SizeConfig.blockSizeVertical!,
+        left: 4 * SizeConfig.blockSizeHorizontal!,
       ),
       child: Align(
         alignment: Alignment.bottomLeft,
@@ -173,12 +179,14 @@ class TitleSubtitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Spider-Man:\nNo Way Home',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                fontSize: 5 * SizeConfig.blockSizeVertical!,
+            SizedBox(
+              child: Text(
+                'Spider-Man:\nNo Way Home',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 5 * SizeConfig.blockSizeVertical!,
+                ),
               ),
             ),
             const SizedBox(
@@ -188,6 +196,7 @@ class TitleSubtitle extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.4,
               child: Text(
                 "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
+                maxLines: 6,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -208,7 +217,7 @@ class TitleSubtitle extends StatelessWidget {
             ),
             Flexible(
               child: SizedBox(
-                height: 200.0,
+                height: MediaQuery.of(context).size.height * 0.2,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: 6,
