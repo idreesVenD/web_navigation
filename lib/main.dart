@@ -37,52 +37,79 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             settings: settings,
             builder: (context) {
-              final PageController controller = PageController();
-              const backgroundGradient = BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xff322043),
-                    Color(0xff1F0C3F),
-                  ],
-                  stops: [0.0, 1.0],
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
-                  tileMode: TileMode.repeated,
-                ),
-              );
-              return Scaffold(
-                body: PageView(
-                  controller: controller,
-                  scrollDirection: Axis.vertical,
-                  children: <Widget>[
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: backgroundGradient,
-                        ),
-                        const BackDropImage(
-                          image: "VlHt27nCqOuTnuX6bku8QZapzO.jpg",
-                        ),
-                        const TitleSubtitle(),
-                      ],
-                    ),
-                    Container(
-                      color: const Color(0xff1F0C3F),
-                      child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(index.toString()),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              );
+              return HomeScreen();
             },
           );
         }
       },
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  HomeScreen({
+    Key? key,
+  }) : super(key: key);
+
+  // final PageController controller;
+  // final BoxDecoration backgroundGradient;
+
+  final PageController controller = PageController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        controller: controller,
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          HomeBanner(),
+          Container(
+            color: const Color(0xff1F0C3F),
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(index.toString()),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HomeBanner extends StatelessWidget {
+  const HomeBanner({
+    Key? key,
+  }) : super(key: key);
+
+  final backgroundGradient = const BoxDecoration(
+    gradient: LinearGradient(
+      colors: [
+        Color(0xff322043),
+        Color(0xff1F0C3F),
+      ],
+      stops: [0.0, 1.0],
+      begin: FractionalOffset.topCenter,
+      end: FractionalOffset.bottomCenter,
+      tileMode: TileMode.repeated,
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: backgroundGradient,
+        ),
+        const BackDropImage(
+          image: "VlHt27nCqOuTnuX6bku8QZapzO.jpg",
+        ),
+        const TitleSubtitle(),
+      ],
     );
   }
 }
@@ -158,11 +185,11 @@ class TitleSubtitle extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: Text(
-                'Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero.',
+                "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
-                  fontSize: 1.8 * SizeConfig.blockSizeVertical!,
+                  fontSize: 1.6 * SizeConfig.blockSizeVertical!,
                 ),
               ),
             ),
