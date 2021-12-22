@@ -34,8 +34,39 @@ class MyApp extends StatelessWidget {
         if (settingsUri.path == "/home") {
           return MaterialPageRoute(
             settings: settings,
-            builder: (context) =>
-                const MyHomePage(title: 'Flutter Demo Home Page'),
+            builder: (context) {
+              final PageController controller = PageController();
+              return Scaffold(
+                body: PageView(
+                  controller: controller,
+                  scrollDirection: Axis.vertical,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          center: Alignment(0, 0),
+                          colors: [
+                            Color(0xff2A2068),
+                            Color(0xff110C31).withOpacity(.97),
+                          ],
+                          radius: 0.8,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text('First Page'),
+                      ),
+                    ),
+                    ListView.builder(
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(index.toString()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
           );
         }
       },
