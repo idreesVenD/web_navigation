@@ -83,19 +83,40 @@ class HomeScreen extends StatelessWidget {
       body: PageView(
         controller: controller,
         scrollDirection: Axis.vertical,
-        children: <Widget>[
-          const HomeBanner(),
-          Container(
-            color: const Color(0xff1F0C3F),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(index.toString()),
-                );
-              },
+        children: const [
+          HomeBanner(),
+          MovieGrid(),
+        ],
+      ),
+    );
+  }
+}
+
+class MovieGrid extends StatelessWidget {
+  const MovieGrid({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color(0xff1F0C3F),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Wrap(
+            children: List.generate(
+              movies.length,
+              (index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(
+                  "https://image.tmdb.org/t/p/w500/" +
+                      movies[index].posterPath!,
+                  width: 250.0,
+                ),
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
