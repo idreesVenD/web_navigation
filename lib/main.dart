@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
+        primaryColor: const Color(0xff322043),
       ),
       initialRoute: "/",
       onGenerateRoute: (settings) {
@@ -50,9 +51,6 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({
     Key? key,
   }) : super(key: key);
-
-  // final PageController controller;
-  // final BoxDecoration backgroundGradient;
 
   final PageController controller = PageController();
 
@@ -192,6 +190,14 @@ class TitleSubtitle extends StatelessWidget {
                   fontSize: 1.6 * SizeConfig.blockSizeVertical!,
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 14.0,
+            ),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+              label: const Text("RENT NOW"),
             ),
             // SizedBox(
             //   height: 300.0,
