@@ -60,28 +60,8 @@ class MyApp extends StatelessWidget {
                         Container(
                           decoration: backgroundGradient,
                         ),
-                        ShaderMask(
-                          shaderCallback: (rect) {
-                            return const LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              stops: [0, 0.6],
-                              colors: [Colors.black, Colors.transparent],
-                            ).createShader(
-                                Rect.fromLTRB(0, 0, rect.width, rect.height));
-                          },
-                          blendMode: BlendMode.dstIn,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              height: MediaQuery.of(context).size.height,
-                              child: Image.network(
-                                "https://image.tmdb.org/t/p/w1280/VlHt27nCqOuTnuX6bku8QZapzO.jpg",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                        const BackDropImage(
+                          image: "VlHt27nCqOuTnuX6bku8QZapzO.jpg",
                         ),
                         const TitleSubtitle(),
                       ],
@@ -104,6 +84,47 @@ class MyApp extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class BackDropImage extends StatelessWidget {
+  const BackDropImage({
+    Key? key,
+    required this.image,
+  }) : super(key: key);
+
+  final String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      shaderCallback: _shaderGradient,
+      blendMode: BlendMode.dstIn,
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: _buildImage(context),
+      ),
+    );
+  }
+
+  SizedBox _buildImage(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: MediaQuery.of(context).size.height,
+      child: Image.network(
+        "https://image.tmdb.org/t/p/w1280/$image",
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Shader _shaderGradient(rect) {
+    return const LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      stops: [0, 0.6],
+      colors: [Colors.black, Colors.transparent],
+    ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
   }
 }
 
@@ -134,12 +155,15 @@ class TitleSubtitle extends StatelessWidget {
             const SizedBox(
               height: 12.0,
             ),
-            Text(
-              'Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero.',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 2 * SizeConfig.blockSizeVertical!,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: Text(
+                'Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 1.8 * SizeConfig.blockSizeVertical!,
+                ),
               ),
             ),
             // SizedBox(
