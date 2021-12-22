@@ -59,7 +59,27 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            SizedBox(
+              width: 3 * SizeConfig.blockSizeHorizontal!,
+            ),
+            const Icon(Icons.movie),
+            const SizedBox(
+              width: 8.0,
+            ),
+            const Text("MovieLOO"),
+          ],
+        ),
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
       body: PageView(
         controller: controller,
         scrollDirection: Axis.vertical,
@@ -136,7 +156,6 @@ class BackDropImage extends StatelessWidget {
   }
 
   SizedBox _buildImage(BuildContext context) {
-    log(MediaQuery.of(context).size.width.toString());
     return SizedBox(
       width: MediaQuery.of(context).size.width *
           (MediaQuery.of(context).size.width < 1450
