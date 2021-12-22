@@ -14,7 +14,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: "/",
+      onGenerateRoute: (settings) {
+        if (settings.name == "/") {
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (context) =>
+                const MyHomePage(title: 'Flutter Demo Home Page'),
+          );
+        }
+      },
     );
   }
 }
