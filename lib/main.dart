@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -16,7 +18,20 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/",
       onGenerateRoute: (settings) {
-        if (settings.name == "/") {
+        final settingsUri = Uri.parse(settings.name ?? "/");
+
+        if (settingsUri.path == "/") {
+          int? counter =
+              int.tryParse(settingsUri.queryParameters["counter"] ?? "");
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (context) => MyHomePage(
+              title: 'Flutter Demo Home Page',
+              counter: counter,
+            ),
+          );
+        }
+        if (settingsUri.path == "/home") {
           return MaterialPageRoute(
             settings: settings,
             builder: (context) =>
@@ -29,9 +44,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({
+    Key? key,
+    required this.title,
+    this.counter,
+  }) : super(key: key);
 
   final String title;
+  final int? counter;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -44,6 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+  }
+
+  @override
+  void initState() {
+    _counter = widget.counter ?? 0;
+    super.initState();
   }
 
   @override
