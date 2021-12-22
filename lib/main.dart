@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
         controller: controller,
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          HomeBanner(),
+          const HomeBanner(),
           Container(
             color: const Color(0xff1F0C3F),
             child: ListView.builder(
