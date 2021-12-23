@@ -655,13 +655,23 @@ class DetailScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              movie.title!,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 5 * SizeConfig.blockSizeVertical!,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  movie.title!,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 5 * SizeConfig.blockSizeVertical!,
+                                  ),
+                                ),
+                                ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.add),
+                                  label: const Text("RENT NOW FOR 99 Rs."),
+                                ),
+                              ],
                             ),
                             Padding(
                               padding:
@@ -762,6 +772,17 @@ class DetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(
                               height: 24.0,
+                            ),
+                            Text(
+                              "Cast",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100,
+                                fontSize: 2.2 * SizeConfig.blockSizeVertical!,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 16.0,
                             ),
                             Expanded(
                               flex: 7,
