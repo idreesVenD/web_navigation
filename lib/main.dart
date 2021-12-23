@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: 3 * SizeConfig.blockSizeHorizontal!,
             ),
-            LogoWidget(),
+            const LogoWidget(),
           ],
         ),
         centerTitle: false,
@@ -79,15 +79,24 @@ class HomeScreen extends StatelessWidget {
       body: PageView(
         controller: controller,
         scrollDirection: Axis.vertical,
-        children: const [
-          HomeBanner(),
-          MovieGrid(),
+        children: [
+          HomeBanner(
+            controller: controller,
+          ),
+          const MovieGrid(),
         ],
       ),
     );
   }
+}
 
-  Row LogoWidget() {
+class LogoWidget extends StatelessWidget {
+  const LogoWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: const [
         Icon(Icons.movie),
@@ -133,7 +142,10 @@ class MovieGrid extends StatelessWidget {
 class HomeBanner extends StatelessWidget {
   const HomeBanner({
     Key? key,
+    required this.controller,
   }) : super(key: key);
+
+  final PageController controller;
 
   final backgroundGradient = const BoxDecoration(
     gradient: LinearGradient(
@@ -158,7 +170,9 @@ class HomeBanner extends StatelessWidget {
         BackDropImage(
           image: movies[0].backdropPath!,
         ),
-        const TitleSubtitle(),
+        TitleSubtitle(
+          controller: controller,
+        ),
       ],
     );
   }
@@ -211,14 +225,17 @@ class BackDropImage extends StatelessWidget {
 class TitleSubtitle extends StatelessWidget {
   const TitleSubtitle({
     Key? key,
+    required this.controller,
   }) : super(key: key);
+
+  final PageController controller;
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Padding(
       padding: EdgeInsets.only(
-        bottom: 5 * SizeConfig.blockSizeVertical!,
+        bottom: 3 * SizeConfig.blockSizeVertical!,
         left: 4 * SizeConfig.blockSizeHorizontal!,
       ),
       child: Align(
@@ -285,6 +302,23 @@ class TitleSubtitle extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 24.0,
+            ),
+            Center(
+              child: IconButton(
+                onPressed: () {
+                  controller.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  );
+                },
+                icon: const Icon(
+                  Icons.arrow_drop_down_circle_outlined,
+                  color: Colors.white,
                 ),
               ),
             ),
