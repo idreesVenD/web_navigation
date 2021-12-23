@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:web_navigation/data.dart';
 
@@ -240,6 +241,11 @@ class _HomeBannerState extends State<HomeBanner> {
 
   int selectedIndex = 0;
 
+  final GlobalKey<AnimatorWidgetState> _title =
+      GlobalKey<AnimatorWidgetState>();
+  final GlobalKey<AnimatorWidgetState> _overview =
+      GlobalKey<AnimatorWidgetState>();
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -254,10 +260,13 @@ class _HomeBannerState extends State<HomeBanner> {
           selectedIndex: selectedIndex,
           controller: widget.controller,
           onIndexChange: (index) {
+            _title.currentState?.forward();
             setState(() {
               selectedIndex = index;
             });
           },
+          titleKey: _title,
+          overviewKey: _overview,
         ),
       ],
     );
@@ -314,11 +323,15 @@ class TitleSubtitle extends StatelessWidget {
     required this.controller,
     required this.onIndexChange,
     required this.selectedIndex,
+    required this.titleKey,
+    required this.overviewKey,
   }) : super(key: key);
 
   final PageController controller;
   final Function(int index) onIndexChange;
   final int selectedIndex;
+  final GlobalKey<AnimatorWidgetState> titleKey;
+  final GlobalKey<AnimatorWidgetState> overviewKey;
 
   @override
   Widget build(BuildContext context) {
@@ -336,12 +349,15 @@ class TitleSubtitle extends StatelessWidget {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.3,
-              child: Text(
-                movies[selectedIndex].title!,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 5 * SizeConfig.blockSizeVertical!,
+              child: FadeInUp(
+                key: titleKey,
+                child: Text(
+                  movies[selectedIndex].title!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 5 * SizeConfig.blockSizeVertical!,
+                  ),
                 ),
               ),
             ),
