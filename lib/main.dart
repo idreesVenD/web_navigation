@@ -260,10 +260,12 @@ class _HomeBannerState extends State<HomeBanner> {
           selectedIndex: selectedIndex,
           controller: widget.controller,
           onIndexChange: (index) {
-            _title.currentState?.forward();
-            setState(() {
-              selectedIndex = index;
-            });
+            if (index != selectedIndex) {
+              _title.currentState?.forward();
+              setState(() {
+                selectedIndex = index;
+              });
+            }
           },
           titleKey: _title,
           overviewKey: _overview,
