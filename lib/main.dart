@@ -73,9 +73,21 @@ class HomeScreen extends StatelessWidget {
         actions: [
           FloatingActionButton.small(
             onPressed: () {},
-            child: const Icon(
-              Icons.shopping_cart_rounded,
-              size: 20.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "1",
+                  style: TextStyle(fontSize: 10.0),
+                ),
+                SizedBox(
+                  width: 2.0,
+                ),
+                Icon(
+                  Icons.shopping_cart_rounded,
+                  size: 16.0,
+                ),
+              ],
             ),
           ),
           SizedBox(
