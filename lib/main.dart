@@ -67,11 +67,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: 3 * SizeConfig.blockSizeHorizontal!,
             ),
-            const Icon(Icons.movie),
-            const SizedBox(
-              width: 8.0,
-            ),
-            const Text("MovieLOO"),
+            LogoWidget(),
           ],
         ),
         centerTitle: false,
@@ -88,6 +84,18 @@ class HomeScreen extends StatelessWidget {
           MovieGrid(),
         ],
       ),
+    );
+  }
+
+  Row LogoWidget() {
+    return Row(
+      children: const [
+        Icon(Icons.movie),
+        SizedBox(
+          width: 8.0,
+        ),
+        Text("MovieLOO"),
+      ],
     );
   }
 }
