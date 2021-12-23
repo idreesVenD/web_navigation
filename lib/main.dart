@@ -419,30 +419,28 @@ class TitleSubtitle extends StatelessWidget {
                       return AnimationConfiguration.staggeredList(
                         position: index,
                         duration: const Duration(milliseconds: 500),
-                        child: SlideAnimation(
+                        child: a.SlideAnimation(
                           verticalOffset: 0.0,
-                          horizontalOffset: 50.0,
-                          child: ScaleAnimation(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  onIndexChange(index);
-                                },
-                                child: Material(
-                                  elevation: 5.0,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: (index == selectedIndex)
-                                          ? Border.all(
-                                              color: Colors.black,
-                                              width: 5.0,
-                                            )
-                                          : null,
-                                    ),
-                                    child: Image.network(
-                                      "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
-                                    ),
+                          horizontalOffset: index * 100,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                onIndexChange(index);
+                              },
+                              child: Material(
+                                elevation: 5.0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: (index == selectedIndex)
+                                        ? Border.all(
+                                            color: Colors.black,
+                                            width: 5.0,
+                                          )
+                                        : null,
+                                  ),
+                                  child: Image.network(
+                                    "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
                                   ),
                                 ),
                               ),
