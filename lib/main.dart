@@ -71,25 +71,13 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          FloatingActionButton.small(
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "1",
-                  style: TextStyle(fontSize: 10.0),
-                ),
-                SizedBox(
-                  width: 2.0,
-                ),
-                Icon(
-                  Icons.shopping_cart_rounded,
-                  size: 16.0,
-                ),
-              ],
-            ),
-          ),
+          Builder(builder: (context) {
+            return CartButton(
+              onTap: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            );
+          }),
           SizedBox(
             width: 3 * SizeConfig.blockSizeHorizontal!,
           ),
@@ -98,6 +86,37 @@ class HomeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
+      ),
+      endDrawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
       ),
       extendBodyBehindAppBar: true,
       body: PageView(
@@ -108,6 +127,38 @@ class HomeScreen extends StatelessWidget {
             controller: controller,
           ),
           const MovieGrid(),
+        ],
+      ),
+    );
+  }
+}
+
+class CartButton extends StatelessWidget {
+  const CartButton({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
+
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.small(
+      onPressed: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Text(
+            "1",
+            style: TextStyle(fontSize: 10.0),
+          ),
+          SizedBox(
+            width: 2.0,
+          ),
+          Icon(
+            Icons.shopping_cart_rounded,
+            size: 16.0,
+          ),
         ],
       ),
     );
