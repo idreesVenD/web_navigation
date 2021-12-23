@@ -37,6 +37,7 @@ dependencies:
   url_strategy: ^0.2.0
   flutter_animator: ^3.2.0
   flutter_staggered_animations: ^1.0.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
