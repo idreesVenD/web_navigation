@@ -13,6 +13,19 @@ void main() {
 
 List<Movie> movies = movieFromJson(data);
 
+BoxDecoration backgroundGradient = const BoxDecoration(
+  gradient: LinearGradient(
+    colors: [
+      Color(0xff322043),
+      Color(0xff1F0C3F),
+    ],
+    stops: [0.0, 1.0],
+    begin: FractionalOffset.topCenter,
+    end: FractionalOffset.bottomCenter,
+    tileMode: TileMode.repeated,
+  ),
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -44,6 +57,14 @@ class MyApp extends StatelessWidget {
             settings: settings,
             builder: (context) {
               return HomeScreen();
+            },
+          );
+        }
+        if (settingsUri.path == "/detail") {
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (context) {
+              return DetailScreen();
             },
           );
         }
@@ -239,19 +260,6 @@ class HomeBanner extends StatefulWidget {
 }
 
 class _HomeBannerState extends State<HomeBanner> {
-  final backgroundGradient = const BoxDecoration(
-    gradient: LinearGradient(
-      colors: [
-        Color(0xff322043),
-        Color(0xff1F0C3F),
-      ],
-      stops: [0.0, 1.0],
-      begin: FractionalOffset.topCenter,
-      end: FractionalOffset.bottomCenter,
-      tileMode: TileMode.repeated,
-    ),
-  );
-
   int selectedIndex = 0;
 
   final GlobalKey<AnimatorWidgetState> _title =
@@ -530,6 +538,86 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  DetailScreen({
+    Key? key,
+  }) : super(key: key);
+
+  final PageController controller = PageController();
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            SizedBox(
+              width: 3 * SizeConfig.blockSizeHorizontal!,
+            ),
+            const LogoWidget(),
+          ],
+        ),
+        actions: [
+          Builder(builder: (context) {
+            return CartButton(
+              onTap: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            );
+          }),
+          SizedBox(
+            width: 3 * SizeConfig.blockSizeHorizontal!,
+          ),
+        ],
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      endDrawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        children: [
+          Container(
+            decoration: backgroundGradient,
+          ),
+        ],
       ),
     );
   }
