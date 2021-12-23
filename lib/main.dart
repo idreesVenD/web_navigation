@@ -212,7 +212,7 @@ class MovieGrid extends StatelessWidget {
   }
 }
 
-class HomeBanner extends StatelessWidget {
+class HomeBanner extends StatefulWidget {
   const HomeBanner({
     Key? key,
     required this.controller,
@@ -220,6 +220,11 @@ class HomeBanner extends StatelessWidget {
 
   final PageController controller;
 
+  @override
+  State<HomeBanner> createState() => _HomeBannerState();
+}
+
+class _HomeBannerState extends State<HomeBanner> {
   final backgroundGradient = const BoxDecoration(
     gradient: LinearGradient(
       colors: [
@@ -233,6 +238,8 @@ class HomeBanner extends StatelessWidget {
     ),
   );
 
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -241,10 +248,16 @@ class HomeBanner extends StatelessWidget {
           decoration: backgroundGradient,
         ),
         BackDropImage(
-          image: movies[0].backdropPath!,
+          image: movies[selectedIndex].backdropPath!,
         ),
         TitleSubtitle(
-          controller: controller,
+          selectedIndex: selectedIndex,
+          controller: widget.controller,
+          onIndexChange: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
         ),
       ],
     );
@@ -299,9 +312,13 @@ class TitleSubtitle extends StatelessWidget {
   const TitleSubtitle({
     Key? key,
     required this.controller,
+    required this.onIndexChange,
+    required this.selectedIndex,
   }) : super(key: key);
 
   final PageController controller;
+  final Function(int index) onIndexChange;
+  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -318,8 +335,9 @@ class TitleSubtitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
+              width: MediaQuery.of(context).size.width * 0.3,
               child: Text(
-                'Spider-Man:\nNo Way Home',
+                movies[selectedIndex].title!,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
@@ -333,7 +351,7 @@ class TitleSubtitle extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: Text(
-                "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
+                movies[selectedIndex].overview!,
                 maxLines: 6,
                 style: TextStyle(
                   color: Colors.white,
@@ -361,16 +379,24 @@ class TitleSubtitle extends StatelessWidget {
                   itemCount: 6,
                   itemBuilder: (context, index) => Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: Material(
-                      elevation: 5.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: (index == 0)
-                              ? Border.all(color: Colors.black, width: 5.0)
-                              : null,
-                        ),
-                        child: Image.network(
-                          "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
+                    child: GestureDetector(
+                      onTap: () {
+                        onIndexChange(index);
+                      },
+                      child: Material(
+                        elevation: 5.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: (index == selectedIndex)
+                                ? Border.all(
+                                    color: Colors.black,
+                                    width: 5.0,
+                                  )
+                                : null,
+                          ),
+                          child: Image.network(
+                            "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
+                          ),
                         ),
                       ),
                     ),
