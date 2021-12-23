@@ -351,7 +351,10 @@ class TitleSubtitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.3,
+              width: MediaQuery.of(context).size.width *
+                  (MediaQuery.of(context).size.width < 1450
+                      ? 0.8
+                      : (MediaQuery.of(context).size.width < 1650 ? 0.4 : 0.3)),
               child: FadeInUp(
                 key: titleKey,
                 child: Text(
@@ -368,7 +371,10 @@ class TitleSubtitle extends StatelessWidget {
               height: 12.0,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
+              width: MediaQuery.of(context).size.width *
+                  (MediaQuery.of(context).size.width < 1450
+                      ? 0.8
+                      : (MediaQuery.of(context).size.width < 1650 ? 0.4 : 0.3)),
               child: Text(
                 movies[selectedIndex].overview!,
                 maxLines: 6,
