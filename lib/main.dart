@@ -107,7 +107,7 @@ class MovieGrid extends StatelessWidget {
             children: List.generate(
               movies.length,
               (index) => Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Image.network(
                   "https://image.tmdb.org/t/p/w500/" +
                       movies[index].posterPath!,
