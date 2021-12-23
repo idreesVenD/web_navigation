@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:web_navigation/data.dart';
 
@@ -392,32 +393,46 @@ class TitleSubtitle extends StatelessWidget {
             Flexible(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 6,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        onIndexChange(index);
-                      },
-                      child: Material(
-                        elevation: 5.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: (index == selectedIndex)
-                                ? Border.all(
-                                    color: Colors.black,
-                                    width: 5.0,
-                                  )
-                                : null,
-                          ),
-                          child: Image.network(
-                            "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
+                child: AnimationLimiter(
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 500),
+                        child: SlideAnimation(
+                          verticalOffset: 0.0,
+                          horizontalOffset: 50.0,
+                          child: ScaleAnimation(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  onIndexChange(index);
+                                },
+                                child: Material(
+                                  elevation: 5.0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: (index == selectedIndex)
+                                          ? Border.all(
+                                              color: Colors.black,
+                                              width: 5.0,
+                                            )
+                                          : null,
+                                    ),
+                                    child: Image.network(
+                                      "https://image.tmdb.org/t/p/w500/${movies[index].backdropPath}",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
               ),
