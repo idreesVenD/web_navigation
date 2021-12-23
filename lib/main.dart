@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart'
+    as a;
 import 'package:url_strategy/url_strategy.dart';
 import 'package:web_navigation/data.dart';
 
@@ -195,15 +197,25 @@ class MovieGrid extends StatelessWidget {
       color: const Color(0xff1F0C3F),
       child: Center(
         child: SingleChildScrollView(
-          child: Wrap(
-            children: List.generate(
-              movies.length,
-              (index) => Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Image.network(
-                  "https://image.tmdb.org/t/p/w500/" +
-                      movies[index].posterPath!,
-                  width: 250.0,
+          child: AnimationLimiter(
+            child: Wrap(
+              children: List.generate(
+                movies.length,
+                (index) => AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 300),
+                  child: SlideAnimation(
+                    child: a.FadeInAnimation(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Image.network(
+                          "https://image.tmdb.org/t/p/w500/" +
+                              movies[index].posterPath!,
+                          width: 250.0,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
