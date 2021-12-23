@@ -70,6 +70,18 @@ class HomeScreen extends StatelessWidget {
             const LogoWidget(),
           ],
         ),
+        actions: [
+          FloatingActionButton.small(
+            onPressed: () {},
+            child: const Icon(
+              Icons.shopping_cart_rounded,
+              size: 20.0,
+            ),
+          ),
+          SizedBox(
+            width: 3 * SizeConfig.blockSizeHorizontal!,
+          ),
+        ],
         centerTitle: false,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
